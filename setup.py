@@ -2,10 +2,23 @@
 # Created by restran on 2017/7/27
 
 from setuptools import setup
-
+import sys
 from mountains import __version__
 
 VERSION = __version__
+kwargs = {}
+
+install_requires = [
+    'requests',
+    'future',
+    'simplejson',
+    'colorlog',
+]
+
+if sys.version_info < (3, 0):
+    install_requires.append('futures')
+
+kwargs['install_requires'] = install_requires
 
 with open('README.md', 'r') as f:
     long_description = f.read()
@@ -25,7 +38,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
-    ],  # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+    ],  # Get strings from http://pypi.python.org/pypi?:action=list_classifiers
     keywords='python util',  # 关键字
     author='restran',  # 用户名
     author_email='grestran@gmail.com',  # 邮箱
@@ -35,6 +48,5 @@ setup(
     include_package_data=True,
     zip_safe=True,
     platforms='any',
-    install_requires=[
-    ],  # 满足的依赖
+    **kwargs
 )

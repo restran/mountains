@@ -3,9 +3,10 @@
 from __future__ import unicode_literals, absolute_import
 import sys
 import os
+import types
 
 __author__ = "restran <grestran@gmail.com>"
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
@@ -26,5 +27,6 @@ else:
     text_type = unicode
     binary_type = str
 
+
 # 当前项目所在路径
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+__base_path = os.path.dirname(os.path.abspath(__file__))

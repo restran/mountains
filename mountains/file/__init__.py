@@ -28,6 +28,12 @@ def read_dict(file_name, clear_none=False):
     return data
 
 
-def write_file(file_name, data):
+def write_bytes_file(file_name, data):
     with open(file_name, 'wb') as f:
         f.write(force_bytes(data))
+
+
+def read_bytes_file(file_name):
+    with open(file_name, 'rb') as f:
+        return f.read()
+

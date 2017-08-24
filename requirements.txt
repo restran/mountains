@@ -1,3 +1,4 @@
+logbook
 future
 requests
 simplejson
