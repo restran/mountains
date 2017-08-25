@@ -18,6 +18,8 @@ if PY3:
     class_types = type,
     text_type = str
     binary_type = bytes
+    long_type = int
+    from io import BytesIO
 
     MAXSIZE = sys.maxsize
 else:
@@ -26,7 +28,14 @@ else:
     class_types = (type, types.ClassType)
     text_type = unicode
     binary_type = str
-
+    long_type = long
+    from cStringIO import StringIO as BytesIO
 
 # 当前项目所在路径
 __base_path = os.path.dirname(os.path.abspath(__file__))
+
+__all__ = [
+    '__author__', '__version__', 'PY2', 'PY3', 'PYPY',
+    'string_types', 'integer_types', 'class_types', 'text_type',
+    'binary_type', 'long_type', 'BytesIO'
+]

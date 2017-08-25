@@ -10,48 +10,84 @@ date string, datetime, time and timestamp converter
 
 
 def str2datetime(date_str, format='%Y-%m-%d %H:%M:%S'):
-    return datetime.strptime(date_str, format)
+    try:
+        return datetime.strptime(date_str, format)
+    except:
+        return None
 
 
 def str2time(date_str, format='%Y-%m-%d %H:%M:%S'):
-    return time.strptime(date_str, format)
+    try:
+        return time.strptime(date_str, format)
+    except:
+        return None
 
 
 def str2timestamp(date_str, format='%Y-%m-%d %H:%M:%S'):
-    return int(time.mktime(time.strptime(date_str, format)))
+    try:
+        return int(time.mktime(time.strptime(date_str, format)))
+    except:
+        return None
 
 
 def datetime2str(dt, format='%Y-%m-%d %H:%M:%S'):
-    return dt.strftime(format)
+    try:
+        return dt.strftime(format)
+    except:
+        return None
 
 
 def datetime2time(dt):
-    return dt.timetuple()
+    try:
+        return dt.timetuple()
+    except:
+        return None
 
 
 def datetime2timestamp(dt):
-    return int(time.mktime(dt.timetuple()))
+    try:
+        return int(time.mktime(dt.timetuple()))
+    except:
+        return None
 
 
 def time2str(time_tuple, format='%Y-%m-%d %H:%M:%S'):
-    return time.strftime(format, time_tuple)
+    try:
+        return time.strftime(format, time_tuple)
+    except:
+        return None
 
 
 def time2datetime(time_tuple):
-    return datetime(*time_tuple[0:6])
+    try:
+        return datetime(*time_tuple[0:6])
+    except:
+        return None
 
 
 def time2timestamp(time_tuple):
-    return int(time.mktime(time_tuple))
+    try:
+        return int(time.mktime(time_tuple))
+    except:
+        return None
 
 
 def timestamp2datetime(ts):
-    return datetime.fromtimestamp(ts)
+    try:
+        return datetime.fromtimestamp(ts)
+    except:
+        return None
 
 
 def timestamp2time(ts):
-    return time.localtime(ts)
+    try:
+        return time.localtime(ts)
+    except:
+        return None
 
 
 def timestamp2str(ts, format='%Y-%m-%d %H:%M:%S'):
-    return datetime.fromtimestamp(ts).strftime(format)
+    try:
+        return datetime.fromtimestamp(ts).strftime(format)
+    except:
+        return None
