@@ -1,18 +1,29 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/7/27
-
-from setuptools import setup
+from __future__ import unicode_literals
 import sys
+
+import pypandoc
+from setuptools import setup, find_packages
+
 from mountains import __version__
 
-VERSION = __version__
-kwargs = {}
+kwargs = {
+    'packages': find_packages(),
+    # 还需要创建一个 MANIFEST.in 的文件，然后将这些数据也放在那里
+    'package_data': {
+        'mountains.http': [
+            'data/user-agents.txt'
+        ],
+    }
+}
 
 install_requires = [
     'requests',
     'future',
     'simplejson',
     'colorlog',
+    'pypandoc'
 ]
 
 if sys.version_info < (3, 0):
@@ -20,12 +31,18 @@ if sys.version_info < (3, 0):
 
 kwargs['install_requires'] = install_requires
 
-with open('README.md', 'r') as f:
-    long_description = f.read()
+# converts markdown to reStructured
+z = pypandoc.convert('README.md', 'rst', format='markdown')
+
+# writes converted file
+with open('README.rst', 'w') as outfile:
+    outfile.write(z)
+
+long_description = z
 
 setup(
     name='mountains',  # 文件名
-    version=VERSION,  # 版本(每次更新上传 pypi 需要修改)
+    version=__version__,  # 版本(每次更新上传 pypi 需要修改)
     description="a util collection for python developing",
     long_description=long_description,  # 放README.md文件，方便在 pypi 页展示
     classifiers=[
@@ -44,7 +61,6 @@ setup(
     author_email='grestran@gmail.com',  # 邮箱
     url='https://github.com/restran/mountains',  # github上的地址
     license='MIT',  # 遵循的协议
-    packages=['mountains'],  # 发布的包名
     include_package_data=True,
     zip_safe=True,
     platforms='any',

@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 import requests
 import random
 from mountains.file import read_dict
-from mountains import __base_path
+from mountains.base import __base_path
 import os
 
 DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2983.0 Safari/537.36'

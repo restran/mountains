@@ -192,12 +192,13 @@ class TimedRotatingFileHandler(BaseHandler):
         return handler
 
 
-def init_log(*handlers, disable_existing_loggers=False):
+def init_log(*handlers, **kwargs):
     """
     :param handlers:
-    :param disable_existing_loggers:
     :return:
     """
+    disable_existing_loggers = kwargs.get('disable_existing_loggers', False)
+
     handlers_config = [t.get_handler() for t in handlers]
     new_handlers_config = {}
     for t in handlers_config:

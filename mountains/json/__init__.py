@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/8/23
 from __future__ import unicode_literals, absolute_import
-from mountains import PY3, text_type
-from mountains.encoding import force_bytes, force_text
-from datetime import datetime
+
 import uuid
+from datetime import datetime
 from decimal import Decimal
+
+from mountains.base import PY3, text_type
+from mountains.encoding import force_bytes
 
 try:
     import simplejson as json

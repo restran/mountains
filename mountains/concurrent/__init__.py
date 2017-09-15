@@ -2,7 +2,6 @@
 # Created by restran on 2017/8/23
 from __future__ import unicode_literals, absolute_import
 from future.moves.queue import Queue
-from mountains import PY2
 import time
 from concurrent import futures
 
