@@ -7,7 +7,7 @@ import logging
 from mountains import json
 
 try:
-    from mountains.django import HttpResponse
+    from django.http import HttpResponse
 except:
     class HttpResponse(object):
         def __init__(*args, **kwargs):
@@ -31,7 +31,7 @@ class APIStatusCode(object):
     SUCCESS = 200  # 成功
     FAIL = 400  # 客户端的错误, 例如请求信息不正确
     ERROR = 500  # 服务端的错误, 例如出现异常
-    LOGIN_REQUIRED = 401
+    LOGIN_REQUIRED = 401  # 需要登录才能访问
 
 
 class APIHandler(object):
