@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/10/13
 from __future__ import unicode_literals, absolute_import
-from mountains import json
+
 import logging
 
+from mountains import json
+
 try:
-    from django.http import HttpResponse
+    from mountains.django import HttpResponse
 except:
     class HttpResponse(object):
         def __init__(*args, **kwargs):
