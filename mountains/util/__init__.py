@@ -24,3 +24,15 @@ def grouper(iterable, size):
         if not chunk:
             return
         yield chunk
+
+
+def any_none(params):
+    return any(map(lambda x: x is None, params))
+
+
+def main():
+    print(any_none([1, 2, 3, 3]))
+
+
+if __name__ == '__main__':
+    main()
