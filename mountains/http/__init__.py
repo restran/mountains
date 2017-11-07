@@ -63,36 +63,49 @@ def read_request(file_name, **params):
     :param params:
     :return:
     """
+    with open(file_name, 'r') as f:
+        data = f.read()
+        return read_request_from_str(data, **params)
+
+
+def read_request_from_str(data, **params):
+    """
+    从字符串中读取请求头，并根据格式化字符串模板，进行字符串格式化
+    :param data:
+    :param params:
+    :return:
+    """
     method, uri = None, None
     headers = {}
     host = ''
-    with open(file_name, 'r') as f:
-        data = f.read()
-        try:
-            headers_text, body = data.split('\n\n', 2)
-        except:
-            headers_text = data
-            body = ''
 
-        header_list = headers_text.split('\n')
-        body = body.format(**params)
-        for i, line in enumerate(header_list):
-            line = line.strip()
-            if line.strip() == '':
-                continue
+    try:
+        split_list = data.split('\n\n')
+        headers_text = split_list[0]
+        body = '\n\n'.join(split_list[1:])
+    except:
+        headers_text = data
+        body = ''
 
-            line = line.format(**params)
-            if i == 0:
-                # 至多3个
-                method, uri, _ = line.split(' ', 2)
-            else:
-                # 至多2个
-                header, value = line.split(':', 1)
-                header = header.strip()
-                value = value.strip()
-                headers[header] = value
-                if header.lower() == 'host':
-                    host = value
+    header_list = headers_text.split('\n')
+    body = body.format(**params)
+    for i, line in enumerate(header_list):
+        line = line.strip()
+        if line.strip() == '':
+            continue
+
+        line = line.format(**params)
+        if i == 0:
+            # 至多3个
+            method, uri, _ = line.split(' ', 2)
+        else:
+            # 至多2个
+            header, value = line.split(':', 1)
+            header = header.strip()
+            value = value.strip()
+            headers[header] = value
+            if header.lower() == 'host':
+                host = value
 
     return headers, method, uri, host, body
 

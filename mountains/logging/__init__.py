@@ -50,7 +50,7 @@ class BaseHandler(object):
         if self.format is None:
             self.format = FORMAT_VERBOSE
 
-        self.handler_class = 'logging.StreamHandler'
+        self.handler_class = 'logging.handlers.StreamHandler'
 
     def get_formatter_name(self):
         return self.__class__.__name__
@@ -131,7 +131,7 @@ class RotatingFileHandler(BaseHandler):
                  format=None, datefmt=None):
         super(RotatingFileHandler, self).__init__(level, format, datefmt)
         self.filename = filename
-        self.handler_class = 'logging.RotatingFileHandler'
+        self.handler_class = 'logging.handlers.RotatingFileHandler'
         self.max_bytes = max_bytes
         self.backup_count = backup_count
         self.delay = delay
@@ -172,7 +172,7 @@ class TimedRotatingFileHandler(BaseHandler):
         """
         super(TimedRotatingFileHandler, self).__init__(level, format, datefmt)
         self.filename = filename
-        self.handler_class = 'logging.TimedRotatingFileHandler'
+        self.handler_class = 'logging.handlers.TimedRotatingFileHandler'
         self.when = when
         self.interval = interval
         self.delay = delay

@@ -1,5 +1,4 @@
 pypandoc
-logbook
 future
 requests
 simplejson
