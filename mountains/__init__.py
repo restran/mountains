@@ -8,7 +8,7 @@ from mountains.encoding import force_text, force_bytes
 from mountains import utils as util
 
 __author__ = "restran <grestran@gmail.com>"
-__version__ = "0.3.17"
+__version__ = "0.3.18"
 
 __all__ = [
     '__author__', '__version__', 'PY2', 'PY3', 'PYPY',
