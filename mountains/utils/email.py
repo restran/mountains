@@ -7,8 +7,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
-
-from future.utils import PY2
+from .. import PY2
 
 
 class EmailHandler(object):

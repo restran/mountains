@@ -4,14 +4,14 @@ from __future__ import unicode_literals, absolute_import
 
 import logging
 
-from mountains import json
+from .. import json
 
 try:
     from django.http import HttpResponse
 except:
     class HttpResponse(object):
         def __init__(*args, **kwargs):
-            raise Exception('django is not install')
+            raise Exception('django is not installed')
 
 logger = logging.getLogger(__name__)
 

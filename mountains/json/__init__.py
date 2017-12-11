@@ -6,8 +6,7 @@ import uuid
 from datetime import datetime
 from decimal import Decimal
 
-from mountains.base import PY3, text_type
-from mountains.encoding import force_bytes
+from .. import PY3, text_type, force_bytes
 
 try:
     import simplejson as json

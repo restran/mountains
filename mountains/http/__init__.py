@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/8/23
 from __future__ import unicode_literals, absolute_import
-import requests
-import random
-from mountains.file import read_dict
-from mountains.base import __base_path
+
 import os
+import random
+
+import requests
+
+from ..base import __base_path
+from ..file import read_dict
 
 DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2983.0 Safari/537.36'
 

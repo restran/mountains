@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/8/23
 from __future__ import unicode_literals, absolute_import
-from future.moves.queue import Queue
+
 import time
 from concurrent import futures
+
+from future.moves.queue import Queue
 
 
 class TaskExecutor(object):

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2016/11/1
 from __future__ import unicode_literals, absolute_import
-from datetime import datetime
+
 import time
+from datetime import datetime
 
 """
 date string, datetime, time and timestamp converter

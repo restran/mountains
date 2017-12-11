@@ -2,7 +2,7 @@
 # Created by restran on 2017/8/23
 from __future__ import unicode_literals, absolute_import
 from collections import deque
-from mountains.encoding import force_text, force_bytes
+from ..encoding import force_text, force_bytes
 
 
 def read_dict(file_name, clear_none=False):

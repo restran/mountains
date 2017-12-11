@@ -2,7 +2,7 @@
 # Created by restran on 2017/8/23
 from __future__ import unicode_literals, absolute_import
 
-from mountains.base import text_type, string_types
+from ..base import text_type, string_types
 
 _UTF8_TYPES = (bytes, type(None))
 
