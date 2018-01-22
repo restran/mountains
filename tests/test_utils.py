@@ -10,7 +10,7 @@ from mountains.utils import *
 logger = logging.getLogger(__name__)
 
 
-class UtilTest(unittest.TestCase):
+class UtilsTest(unittest.TestCase):
     def setUp(self):
         pass
 

@@ -8,15 +8,13 @@ from decimal import Decimal
 
 from .. import PY3, text_type, force_bytes
 
+# https://github.com/esnme/ultrajson
+# ujson 速度比较快，但是有些参数没有，与 simplejson 和 json 不完全兼容
+
 try:
-    # https://github.com/esnme/ultrajson
-    # ujson 速度比较快，优先使用
-    import ujson as json
-except:
-    try:
-        import simplejson as json
-    except ImportError:
-        import json
+    import simplejson as json
+except ImportError:
+    import json
 
 
 def json_default(obj):
@@ -60,6 +58,7 @@ def dumps(dict_data, ensure_ascii=True, indent=None,
     :param dict_data:
     :return:
     """
+
     return json.dumps(dict_data, default=json_default,
                       ensure_ascii=ensure_ascii, indent=indent,
                       sort_keys=sort_keys, encoding=encoding, **kwargs)
