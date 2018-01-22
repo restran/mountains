@@ -9,9 +9,14 @@ from decimal import Decimal
 from .. import PY3, text_type, force_bytes
 
 try:
-    import simplejson as json
-except ImportError:
-    import json
+    # https://github.com/esnme/ultrajson
+    # ujson 速度比较快，优先使用
+    import ujson as json
+except:
+    try:
+        import simplejson as json
+    except ImportError:
+        import json
 
 
 def json_default(obj):
@@ -45,16 +50,16 @@ def loads(content, encoding=None, **kwargs):
 
 
 def dumps(dict_data, ensure_ascii=True, indent=None,
-          sort_keys=False, encoding='utf-8', **kwargs):
+          sort_keys=False, encoding=None, **kwargs):
     """
     返回json数据
+    :param encoding:
     :param ensure_ascii:
     :param sort_keys:
     :param indent:
     :param dict_data:
     :return:
     """
-
     return json.dumps(dict_data, default=json_default,
                       ensure_ascii=ensure_ascii, indent=indent,
                       sort_keys=sort_keys, encoding=encoding, **kwargs)

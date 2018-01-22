@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/9/15
 from __future__ import unicode_literals, absolute_import, print_function
-from .. import force_text, text_type
+from .. import force_text, text_type, binary_type
 import itertools
 
 
@@ -30,6 +30,22 @@ def any_none(*params):
     return any(map(lambda x: x is None, params))
 
 
+def text_type_dict(dict_data):
+    if not isinstance(dict_data, dict):
+        raise TypeError
+
+    new_dict = {}
+    for k, v in dict_data.items():
+        if isinstance(k, binary_type):
+            k = k.decode('utf-8')
+        if isinstance(v, binary_type):
+            v = v.decode('utf-8')
+
+        new_dict[k] = v
+
+    return new_dict
+
+
 class PrintCollector(object):
     def __init__(self):
         self.collector = []
@@ -49,6 +65,20 @@ class PrintCollector(object):
             result = self.collector
 
         return result
+
+
+class ObjectDict(dict):
+    """Makes a dictionary behave like an object, with attribute-style access.
+    """
+
+    def __getattr__(self, name):
+        try:
+            return self[name]
+        except KeyError:
+            return None
+
+    def __setattr__(self, name, value):
+        self[name] = value
 
 
 def main():
