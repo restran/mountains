@@ -8,7 +8,7 @@ from .encoding import force_text, force_bytes
 from . import utils as util
 
 __author__ = "restran <grestran@gmail.com>"
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 __all__ = [
     '__author__', '__version__', 'PY2', 'PY3', 'PYPY',

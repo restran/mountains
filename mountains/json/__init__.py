@@ -37,15 +37,15 @@ def json_default(obj):
     raise TypeError("%r is not JSON serializable" % obj)
 
 
-def loads(content, encoding=None):
+def loads(content, encoding=None, **kwargs):
     if PY3:
-        return json.loads(s=force_bytes(content), encoding=encoding)
+        return json.loads(s=force_bytes(content), encoding=encoding, **kwargs)
     else:
-        return json.loads(s=content, encoding=encoding)
+        return json.loads(s=content, encoding=encoding, **kwargs)
 
 
 def dumps(dict_data, ensure_ascii=True, indent=None,
-          sort_keys=False):
+          sort_keys=False, encoding='utf-8', **kwargs):
     """
     返回json数据
     :param ensure_ascii:
@@ -57,4 +57,4 @@ def dumps(dict_data, ensure_ascii=True, indent=None,
 
     return json.dumps(dict_data, default=json_default,
                       ensure_ascii=ensure_ascii, indent=indent,
-                      sort_keys=sort_keys)
+                      sort_keys=sort_keys, encoding=encoding, **kwargs)

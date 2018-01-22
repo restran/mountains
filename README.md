@@ -5,6 +5,16 @@
 
 A util collection for python developing.
 
+## install
+
+    pip install mountains
+    pip3 install mountains
+
+## features
+
+1. Python 2-3 compatible for much of code
+2. ...
+
 ## Upload to PyPi
 
 安装最新的 setuptools
