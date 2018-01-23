@@ -2,6 +2,7 @@
 
 [![travis-ci](https://travis-ci.org/restran/mountains.svg?branch=master)](https://travis-ci.org/restran/mountains)
 [![Coverage Status](https://coveralls.io/repos/github/restran/mountains/badge.svg?branch=master)](https://coveralls.io/github/restran/mountains?branch=master)
+[![pypi package](https://img.shields.io/pypi/v/mountains.svg)](https://pypi.python.org/pypi/mountains/)
 
 A util collection for python developing.
 
