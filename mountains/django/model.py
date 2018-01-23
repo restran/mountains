@@ -29,15 +29,6 @@ def add_fields_2_json(obj, json_dict, fields):
             json_dict[t] = getattr(obj, t)
 
 
-def str_2_int(number_str, default_value=None):
-    if number_str is None or number_str == '':
-        return default_value
-    try:
-        return int(number_str)
-    except Exception as e:
-        return default_value
-
-
 def set_dict_none_default(dict_item, default_value):
     """
     对字典中为None的值，重新设置默认值
@@ -48,6 +39,16 @@ def set_dict_none_default(dict_item, default_value):
     for (k, v) in iteritems(dict_item):
         if v is None:
             dict_item[k] = default_value
+
+
+def auto_model_name_recognize(model_name):
+    """
+    自动将 site-user 识别成 SiteUser
+    :param model_name:
+    :return:
+    """
+    name_list = model_name.split('-')
+    return ''.join(['%s%s' % (name[0].upper(), name[1:]) for name in name_list])
 
 
 def model_get_entry(model_class, entry_id, select_related_fields=None):

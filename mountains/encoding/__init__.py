@@ -69,15 +69,3 @@ def force_bytes(s, encoding=None):
     """
 
     return utf8(s, encoding)
-
-
-def str_2_int(s):
-    """
-    将整数字符串转成 int
-    """
-    if s is None or s == '' or not isinstance(s, string_types):
-        return None
-    try:
-        return int(s)
-    except:
-        return None
