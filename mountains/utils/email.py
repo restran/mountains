@@ -2,12 +2,16 @@
 # created by restran on 2016/07/02
 from __future__ import unicode_literals, absolute_import, print_function
 
+import logging
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
-from .. import PY2
+from email.utils import formatdate
+
+from mountains import BytesIO, PY2
+
+logger = logging.getLogger(__name__)
 
 
 class EmailHandler(object):
@@ -51,7 +55,7 @@ class EmailHandler(object):
         smtp.login(self.mail_from, self.password)
         msg = MIMEMultipart()
         msg['From'] = self.mail_from
-        msg['To'] = COMMASPACE.join(mail_to_list)
+        msg['To'] = ', '.join(mail_to_list)
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
         # 如果 content 是 html，则需要设置 _subtype='html'
@@ -70,6 +74,49 @@ class EmailHandler(object):
         smtp.close()
 
 
+class PostfixEmailHandler(object):
+    def __init__(self, mail_from, smtp_server='localhost', smtp_port=25):
+        self.mail_from = mail_from
+        self.smtp_server = smtp_server
+        self.smtp_port = smtp_port
+
+    def send_email(self, mail_to, subject, content, content_type='plain', files=None):
+        """
+        :param content_type: 如果 text 是html，则需要设置 _subtype='html'
+        :param mail_to:
+        :param subject:
+        :param content:
+        :param files: (f_name, f_data)
+        :return:
+        """
+        assert type(mail_to) == list
+        server = self.smtp_server
+        if files is None:
+            files = []
+
+        msg = MIMEMultipart()
+        msg['From'] = self.mail_from
+        msg['To'] = ', '.join(mail_to)
+        msg['Date'] = formatdate(localtime=True)
+        msg['Subject'] = subject
+        # 如果 text 是html，则需要设置 _subtype='html'
+        # 默认情况下 _subtype='plain'，即纯文本
+        msg.attach(MIMEText(content, _subtype=content_type, _charset='utf-8'))
+
+        for fn, fd in files:
+            part = MIMEText(fd, 'base64', 'utf-8')
+            part["Content-Type"] = 'application/octet-stream'
+            basename = fn
+            if PY2:
+                basename = basename.encode('gb2312')
+            # 文件名使用 gb2312 编码，否则会没有附件
+            part.add_header('Content-Disposition', 'attachment', filename=('gb2312', '', basename))
+            msg.attach(part)
+        smtp = smtplib.SMTP(server, port=self.smtp_port)
+        smtp.sendmail(self.mail_from, mail_to, msg.as_string())
+        smtp.close()
+
+
 def main():
     handler = EmailHandler('mail_from@example.com', 'password', 'smtp.example.com', 465)
     mail_to_list = ['example@test.com']
@@ -79,6 +126,18 @@ def main():
     file_name_list = ['test.rar']
     handler.send_mail_ssl(mail_to_list, subject, content, file_name_list)
     print('邮件发送成功')
+
+    mail_to_list = ['mail_from@example.com']
+    subject = 'Python 发送邮件测试'
+    content = '这是用 Python 自动发送的邮件，请勿回复'
+    bio = BytesIO()
+    bio.write(b'123')
+    bio.getvalue()
+    files = [
+        ('test中文3.txt', bio.getvalue()),
+    ]
+    handler = PostfixEmailHandler('mail_from@example.com')
+    handler.send_email(mail_to_list, subject, content, files=files)
 
 
 if __name__ == '__main__':

@@ -24,9 +24,12 @@ def str2time(date_str, format='%Y-%m-%d %H:%M:%S'):
         return None
 
 
-def str2timestamp(date_str, format='%Y-%m-%d %H:%M:%S'):
+def str2timestamp(date_str, format='%Y-%m-%d %H:%M:%S', millisecond=False):
     try:
-        return int(time.mktime(time.strptime(date_str, format)))
+        ts = time.mktime(time.strptime(date_str, format))
+        if millisecond:
+            ts = ts * 1000
+        return int(ts)
     except:
         return None
 
@@ -45,9 +48,12 @@ def datetime2time(dt):
         return None
 
 
-def datetime2timestamp(dt):
+def datetime2timestamp(dt, millisecond=False):
     try:
-        return int(time.mktime(dt.timetuple()))
+        ts = time.mktime(dt.timetuple())
+        if millisecond:
+            ts = ts * 1000
+        return int(ts)
     except:
         return None
 
@@ -66,29 +72,38 @@ def time2datetime(time_tuple):
         return None
 
 
-def time2timestamp(time_tuple):
+def time2timestamp(time_tuple, millisecond=False):
     try:
-        return int(time.mktime(time_tuple))
+        ts = time.mktime(time_tuple)
+        if millisecond:
+            ts = ts * 1000
+        return int(ts)
     except:
         return None
 
 
-def timestamp2datetime(ts):
+def timestamp2datetime(ts, millisecond=False):
     try:
+        if millisecond:
+            ts = int(ts / 1000.0)
         return datetime.fromtimestamp(ts)
     except:
         return None
 
 
-def timestamp2time(ts):
+def timestamp2time(ts, millisecond=False):
     try:
+        if millisecond:
+            ts = int(ts / 1000.0)
         return time.localtime(ts)
     except:
         return None
 
 
-def timestamp2str(ts, format='%Y-%m-%d %H:%M:%S'):
+def timestamp2str(ts, format='%Y-%m-%d %H:%M:%S', millisecond=False):
     try:
+        if millisecond:
+            ts = int(ts / 1000.0)
         return datetime.fromtimestamp(ts).strftime(format)
     except:
         return None
