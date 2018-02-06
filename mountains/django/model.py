@@ -5,7 +5,11 @@ from __future__ import unicode_literals, absolute_import
 import logging
 import traceback
 
-from django.core.paginator import Paginator, EmptyPage
+try:
+    from django.core.paginator import Paginator, EmptyPage
+except ImportError:
+    raise Exception('django is not installed')
+
 from future.utils import iteritems
 
 MAX_PAGE_SIZE = 100
@@ -135,8 +139,10 @@ def model_to_page_list(model_class, page_num,
                        page_size=DEFAULT_PAGE_SIZE,
                        filter_dict=None, order_by_list=None,
                        select_related_fields=None, q_filter=None,
-                       values=None, to_json_method='to_json'):
+                       values=None, to_json_method='to_json',
+                       max_page_size=MAX_PAGE_SIZE):
     """
+    :param max_page_size:
     :param model_class:
     :param page_num:
     :param page_size:
@@ -176,8 +182,8 @@ def model_to_page_list(model_class, page_num,
             *filter_list, **filter_dict).values(*fields).order_by(*order_by_list)
 
     if page_num is not None:
-        if page_size > MAX_PAGE_SIZE:
-            page_size = MAX_PAGE_SIZE
+        if page_size > max_page_size:
+            page_size = max_page_size
 
         paginator = Paginator(objects, page_size)
         try:

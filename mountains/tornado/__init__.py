@@ -12,7 +12,7 @@ from ..http import random_agent
 try:
     from tornado.gen import coroutine, is_future, Return
     from tornado.httpclient import AsyncHTTPClient, HTTPRequest, HTTPError
-except:
+except ImportError:
     raise Exception('tornado is not installed')
 
 logger = logging.getLogger(__name__)
