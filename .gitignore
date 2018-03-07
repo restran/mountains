@@ -105,3 +105,4 @@ ENV/
 
 .coverage
 tests/log.txt
+.pytest_cache/
