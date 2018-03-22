@@ -17,5 +17,5 @@ def fixed_length_split(s, width):
 
 
 def line_break(s, length=76):
-    x = '\n'.join(s[pos:pos + length] for pos in range(0, len(s), 76))
+    x = '\n'.join(s[pos:pos + length] for pos in range(0, len(s), length))
     return x
