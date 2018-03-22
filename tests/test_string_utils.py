@@ -10,7 +10,7 @@ import string
 
 class UtilsTest(unittest.TestCase):
     def test_line_break(self):
-        s = ''.join([random.choice(string.ascii_letters + string.digits) for _ in xrange(3000)])
+        s = ''.join([random.choice(string.ascii_letters + string.digits) for _ in range(3000)])
         break_s = string_utils.line_break(s)
         self.assertEqual(s, break_s.replace('\n', ''))
 
