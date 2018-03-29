@@ -37,3 +37,23 @@ def read_bytes_file(file_name):
     with open(file_name, 'rb') as f:
         return f.read()
 
+
+def write_file(file_name, data):
+    """
+    写文本文件
+    :param file_name:
+    :param data:
+    :return:
+    """
+    with open(file_name, 'w') as f:
+        f.write(data)
+
+
+def read_file(file_name):
+    """
+    读文本文件
+    :param file_name:
+    :return:
+    """
+    with open(file_name, 'r') as f:
+        return f.read()
