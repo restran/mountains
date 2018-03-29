@@ -10,6 +10,7 @@ from .. import PY3, text_type, force_bytes
 
 # https://github.com/esnme/ultrajson
 # ujson 速度比较快，但是有些参数没有，与 simplejson 和 json 不完全兼容
+# 而且 ujson 似乎已经不再维护了
 
 try:
     import simplejson as json

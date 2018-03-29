@@ -43,14 +43,14 @@ class AsyncHTTPExecutor(object):
     异步HTTP请求，可以并发访问
     """
 
-    def __init__(self, task_queue, fn_on_request,
-                 fn_on_success, fn_on_error, fn_on_queue_empty=None,
+    def __init__(self, task_queue, on_request,
+                 on_success, on_error, on_queue_empty=None,
                  proxy_list=None,
                  max_workers=20, timeout=5, verbose=False):
-        self.fn_on_queue_empty = fn_on_queue_empty
-        self.fn_on_request = fn_on_request
-        self.fn_on_success = fn_on_success
-        self.fn_on_error = fn_on_error
+        self.fn_on_queue_empty = on_queue_empty
+        self.fn_on_request = on_request
+        self.fn_on_success = on_success
+        self.fn_on_error = on_error
         self.task_queue = deque()
         self.task_queue.extend(task_queue)
         self.timeout = timeout
@@ -85,6 +85,9 @@ class AsyncHTTPExecutor(object):
                 return None
             else:
                 item = self.fn_on_queue_empty(self.task_queue)
+                if isinstance(item, list) and len(item) > 0:
+                    self.task_queue.extend(item)
+                    item = self.task_queue.popleft()
         return item
 
     @coroutine
