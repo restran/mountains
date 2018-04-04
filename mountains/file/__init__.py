@@ -3,6 +3,7 @@
 from __future__ import unicode_literals, absolute_import
 from collections import deque
 from ..encoding import force_text, force_bytes
+from .. import json
 
 
 def read_dict(file_name, clear_none=False):
@@ -57,3 +58,21 @@ def read_file(file_name):
     """
     with open(file_name, 'r') as f:
         return f.read()
+
+
+def read_json(file_name):
+    with open(file_name, 'r') as f:
+        try:
+            return json.loads(f.read())
+        except:
+            return None
+
+
+def write_json(file_name, data, **kwargs):
+    with open(file_name, 'w') as f:
+        try:
+            data = json.dumps(data, **kwargs)
+            f.write(data)
+            return True
+        except:
+            return False
