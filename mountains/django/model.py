@@ -55,16 +55,22 @@ def auto_model_name_recognize(model_name):
     return ''.join(['%s%s' % (name[0].upper(), name[1:]) for name in name_list])
 
 
-def model_get_entry(model_class, entry_id, select_related_fields=None):
+def model_get_entry(model_class, entry_id=None, filter_dict=None, select_related_fields=None):
     """
     """
+    if filter_dict is None:
+        filter_dict = {}
+
+    if entry_id is not None:
+        filter_dict['id'] = entry_id
+    
     try:
         if select_related_fields is None:
-            return model_class.objects.get(id=entry_id)
+            return model_class.objects.get(**filter_dict)
         else:
             fields = [t.attname for t in model_class._meta.fields]
             fields.extend(select_related_fields)
-            obj = model_class.objects.values(*fields).get(id=entry_id)
+            obj = model_class.objects.values(*fields).get(**filter_dict)
             return object_set_dict_data(model_class, obj)
     except model_class.DoesNotExist:
         return None
