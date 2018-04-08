@@ -61,18 +61,20 @@ def read_file(file_name):
 
 
 def read_json(file_name):
-    with open(file_name, 'r') as f:
-        try:
-            return json.loads(f.read())
-        except:
-            return None
+    try:
+        return json.loads(read_bytes_file(file_name))
+    except:
+        return None
 
 
-def write_json(file_name, data, **kwargs):
-    with open(file_name, 'w') as f:
+def write_json(file_name, data, indent=None,
+               ensure_ascii=True, sort_keys=False, **kwargs):
+    with open(file_name, 'wb') as f:
         try:
-            data = json.dumps(data, **kwargs)
-            f.write(data)
+            data = json.dumps(data, indent=indent,
+                              ensure_ascii=ensure_ascii,
+                              sort_keys=sort_keys, **kwargs)
+            f.write(force_bytes(data))
             return True
         except:
             return False
