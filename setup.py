@@ -49,14 +49,13 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],  # Get strings from http://pypi.python.org/pypi?:action=list_classifiers
-    keywords='python util',  # 关键字
+    keywords='python utils',  # 关键字
     author='restran',  # 用户名
     author_email='grestran@gmail.com',  # 邮箱
     url='https://github.com/restran/mountains',  # github上的地址
