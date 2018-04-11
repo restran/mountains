@@ -63,7 +63,7 @@ def model_get_entry(model_class, entry_id=None, filter_dict=None, select_related
 
     if entry_id is not None:
         filter_dict['id'] = entry_id
-    
+
     try:
         if select_related_fields is None:
             return model_class.objects.get(**filter_dict)
