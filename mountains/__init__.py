@@ -5,13 +5,12 @@ from __future__ import unicode_literals, absolute_import
 from .base import PY2, PY3, PYPY, string_types, integer_types, \
     class_types, text_type, binary_type, long_type, BytesIO
 from .encoding import force_text, force_bytes
-from . import utils as util
 
 __author__ = "restran <grestran@gmail.com>"
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 
 __all__ = [
     '__author__', '__version__', 'PY2', 'PY3', 'PYPY',
     'string_types', 'integer_types', 'class_types', 'text_type',
-    'binary_type', 'long_type', 'BytesIO', 'force_text', 'force_bytes', 'util'
+    'binary_type', 'long_type', 'BytesIO', 'force_text', 'force_bytes'
 ]
