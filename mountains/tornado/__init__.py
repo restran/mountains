@@ -6,6 +6,9 @@ import logging
 import platform
 import time
 from collections import deque
+
+from future.moves.urllib.parse import urlunparse, urlparse, urlencode
+from mountains import json as json_util
 from .. import force_text
 from ..http import random_agent
 
@@ -198,7 +201,8 @@ class AsyncHTTPExecutor(object):
 
 
 @coroutine
-def async_request(method='GET', url=None, headers=None, body=None,
+def async_request(method='GET', url=None, params=None,
+                  headers=None, data=None, json=None,
                   on_response=None, on_error=None,
                   connect_timeout=DEFAULT_CONNECT_TIMEOUT,
                   request_timeout=DEFAULT_REQUEST_TIMEOUT,
@@ -209,11 +213,39 @@ def async_request(method='GET', url=None, headers=None, body=None,
         if url is None:
             return
 
-        body = body if method == 'POST' else None
+        method = method.upper()
 
         base_headers = {
             'User-Agent': random_agent(),
         }
+
+        url_parsed = urlparse(url)
+        if params is not None:
+            query = urlencode(params, doseq=True)
+        else:
+            query = ''
+
+        if url_parsed.query != '':
+            query = '%s&%s' % (query, url_parsed.query)
+
+        url = urlunparse((url_parsed.scheme, url_parsed.netloc,
+                          url_parsed.path, url_parsed.params,
+                          query, url_parsed.fragment))
+
+        if method == 'GET':
+            body = None
+        else:
+            if json is not None:
+                body = json_util.dumps(json)
+                base_headers['Content-Type'] = 'application/json;charset=utf-8'
+            elif isinstance(data, dict):
+                body = urlencode(data, doseq=True)
+                base_headers['Content-Type'] = 'application/x-www-form-urlencoded'
+            elif isinstance(data, list):
+                body = force_text(data)
+            else:
+                body = data
+
         if isinstance(headers, dict):
             base_headers.update(headers)
 
