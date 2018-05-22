@@ -23,7 +23,6 @@ install_requires = [
     'future',
     'simplejson',
     'colorlog',
-    'pypandoc'
 ]
 
 if sys.version_info < (3, 0):
@@ -31,14 +30,7 @@ if sys.version_info < (3, 0):
 
 kwargs['install_requires'] = install_requires
 
-# converts markdown to reStructured
-z = pypandoc.convert('README.md', 'rst', format='markdown')
-
-# writes converted file
-with open('README.rst', 'w') as outfile:
-    outfile.write(z)
-
-long_description = z
+long_description = open('README.rst', 'r').read()
 
 setup(
     name='mountains',  # 文件名

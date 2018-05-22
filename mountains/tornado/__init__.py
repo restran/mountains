@@ -219,18 +219,15 @@ def async_request(method='GET', url=None, params=None,
             'User-Agent': random_agent(),
         }
 
-        url_parsed = urlparse(url)
         if params is not None:
+            url_parsed = urlparse(url)
             query = urlencode(params, doseq=True)
-        else:
-            query = ''
+            if url_parsed.query != '':
+                query = '%s&%s' % (query, url_parsed.query)
 
-        if url_parsed.query != '':
-            query = '%s&%s' % (query, url_parsed.query)
-
-        url = urlunparse((url_parsed.scheme, url_parsed.netloc,
-                          url_parsed.path, url_parsed.params,
-                          query, url_parsed.fragment))
+            url = urlunparse((url_parsed.scheme, url_parsed.netloc,
+                              url_parsed.path, url_parsed.params,
+                              query, url_parsed.fragment))
 
         if method == 'GET':
             body = None

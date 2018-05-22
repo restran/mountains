@@ -100,7 +100,8 @@ def read_request_from_str(data, **params):
         line = line.format(**params)
         if i == 0:
             # 至多3个
-            method, uri, _ = line.split(' ', 2)
+            split_line = line.strip().split(' ')
+            method, uri, _ = split_line[0], ' '.join(split_line[1:-1]), split_line[-1]
         else:
             # 至多2个
             header, value = line.split(':', 1)
