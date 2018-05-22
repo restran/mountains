@@ -6,14 +6,15 @@ from ..encoding import force_text, force_bytes
 from .. import json
 
 
-def read_dict(file_name, clear_none=False):
+def read_dict(file_name, clear_none=False, encoding='utf-8'):
     """
     读取字典文件
+    :param encoding:
     :param clear_none:
     :param file_name:
     :return:
     """
-    with open(file_name, 'r') as f:
+    with open(file_name, 'r', encoding=encoding) as f:
         data = []
         i = 0
         for line in f:
@@ -50,13 +51,14 @@ def write_file(file_name, data):
         f.write(data)
 
 
-def read_file(file_name):
+def read_file(file_name, encoding='utf-8'):
     """
     读文本文件
+    :param encoding:
     :param file_name:
     :return:
     """
-    with open(file_name, 'r') as f:
+    with open(file_name, 'r', encoding=encoding) as f:
         return f.read()
 
 
