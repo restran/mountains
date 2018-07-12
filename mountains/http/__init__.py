@@ -9,6 +9,7 @@ import requests
 
 from ..base import __base_path
 from ..file import read_dict
+from ..encoding import force_bytes
 
 DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2983.0 Safari/537.36'
 
@@ -90,8 +91,12 @@ def read_request_from_str(data, **params):
         headers_text = data
         body = ''
 
+    body = force_bytes(body)
+    for k, v in params.items():
+        body = body.replace(b'{%s}' % force_bytes(k), force_bytes(v))
+
     header_list = headers_text.split('\n')
-    body = body.format(**params)
+
     for i, line in enumerate(header_list):
         line = line.strip()
         if line.strip() == '':

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/11/7
 from __future__ import unicode_literals, absolute_import
+from ..encoding import force_bytes
 
 
 def fixed_length_split(s, width):
@@ -40,3 +41,28 @@ def any_empty(*params):
             return True
     else:
         return False
+
+
+def bytes_2_printable_strings(data):
+    data = force_bytes(data)
+    result = ['', '']
+    for c in data:
+        if PY2:
+            c = ord(c)
+
+        if 32 <= c <= 126 or c in (9, 10, 13):
+            if c == 9:
+                c = 32
+            elif c == 13:
+                c = 10
+
+            # 去掉连续的空格
+            if c == 32 and result[-1] == ' ':
+                continue
+            # 去掉连续的换行
+            elif c == 10 and result[-1] == '\n':
+                continue
+
+            result.append(chr(c))
+
+    return ''.join(result)
