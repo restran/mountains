@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 import sys
 
-import pypandoc
 from setuptools import setup, find_packages
 
 from mountains import __version__

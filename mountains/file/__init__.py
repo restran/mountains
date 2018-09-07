@@ -14,19 +14,25 @@ def read_dict(file_name, clear_none=False, encoding='utf-8'):
     :param file_name:
     :return:
     """
-    with open(file_name, 'r', encoding=encoding) as f:
-        data = []
-        i = 0
-        for line in f:
-            i += 1
-            try:
-                line = force_text(line).strip('\n').strip()
-                data.append(line)
-            except:
-                print('read error line %s' % i)
-        if clear_none:
-            data = [t for t in data if t != '']
-        data = deque(data)
+    with open(file_name, 'rb') as f:
+        data = f.read()
+
+    if encoding is not None:
+        data = data.decode(encoding)
+
+    line_list = data.splitlines()
+    data = []
+    i = 0
+    for line in line_list:
+        i += 1
+        try:
+            line = force_text(line).strip()
+            data.append(line)
+        except:
+            print('read error line %s' % i)
+    if clear_none:
+        data = [t for t in data if t != '']
+    data = deque(data)
     return data
 
 
@@ -58,8 +64,13 @@ def read_file(file_name, encoding='utf-8'):
     :param file_name:
     :return:
     """
-    with open(file_name, 'r', encoding=encoding) as f:
-        return f.read()
+    with open(file_name, 'rb') as f:
+        data = f.read()
+
+    if encoding is not None:
+        data = data.decode(encoding)
+
+    return data
 
 
 def read_json(file_name):
