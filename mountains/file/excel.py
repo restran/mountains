@@ -15,9 +15,10 @@ except:
     raise Exception('xlsxwriter is not installed')
 
 
-def read_excel(file_name, offset=1):
+def read_excel(file_name, offset=1, sheet_index=0):
     """
     读取 Excel
+    :param sheet_index:
     :param file_name:
     :param offset: 偏移，一般第一行是表头，不需要读取数据
     :return:
@@ -30,7 +31,7 @@ def read_excel(file_name, offset=1):
     if len(workbook.sheets()) <= 0:
         return []
 
-    sh = workbook.sheets()[0]
+    sh = workbook.sheets()[sheet_index]
 
     raw_data = []
     n_rows = sh.nrows
@@ -59,15 +60,26 @@ def write_excel(headers, data, file_name):
     sio = BytesIO()
     workbook = xlsxwriter.Workbook(sio)
     worksheet = workbook.add_worksheet()
-
+    new_headers = []
+    if len(headers) > 0:
+        for t in headers:
+            if isinstance(t, dict):
+                new_headers.append(t.get('name', ''))
+            else:
+                new_headers.append(t)
+    headers = new_headers
     for i, t in enumerate(headers):
-        worksheet.write(0, i, t['name'])
+        worksheet.write(0, i, t)
 
     index = 1
     for row in data:
-        for i, x in enumerate(row):
-            worksheet.write(index, i, x)
+        if isinstance(row, dict):
+            for i, name in enumerate(headers):
+                worksheet.write(index, i, row.get(name, ''))
+        else:
+            for i, x in enumerate(row):
+                worksheet.write(index, i, x)
         index += 1
     # 关闭 Excel
     workbook.close()
-    return write_bytes_file(sio.getvalue(), file_name)
+    return write_bytes_file(file_name, sio.getvalue())

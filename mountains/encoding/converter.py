@@ -233,7 +233,6 @@ def xml_un_escape(data):
     return xml_unescape_func(data)
 
 
-
 def str2int(number_str, default_value=None):
     if number_str is None or number_str == '':
         return default_value
