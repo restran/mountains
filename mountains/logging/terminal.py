@@ -18,3 +18,32 @@ def print_on_terminal_bottom(text):
 def print_on_terminal_fix(text):
     sys.stdout.write("%s\r" % text)
     sys.stdout.flush()
+
+
+class ColorConsole(object):
+    GREEN = "\033[92m"
+    BLUE = "\033[94m"
+    BOLD = "\033[1m"
+    YELLOW = "\033[93m"
+    RED = "\033[91m"
+    END = "\033[0m"
+
+    @classmethod
+    def green(cls, message):
+        return '%s%s%s' % (cls.GREEN, message, cls.END)
+
+    @classmethod
+    def blue(cls, message):
+        return '%s%s%s' % (cls.BLUE, message, cls.END)
+
+    @classmethod
+    def red(cls, message):
+        return '%s%s%s' % (cls.RED, message, cls.END)
+
+    @classmethod
+    def yellow(cls, message):
+        return '%s%s%s' % (cls.YELLOW, message, cls.END)
+
+    @classmethod
+    def bold(cls, message):
+        return '%s%s%s' % (cls.BOLD, message, cls.END)
