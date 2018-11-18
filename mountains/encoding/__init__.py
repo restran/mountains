@@ -42,7 +42,7 @@ def to_unicode(value, encoding=None):
         )
 
     if encoding is not None:
-        return value.decode('utf-8')
+        return value.decode(encoding)
     else:
         try:
             value = value.decode('utf-8')

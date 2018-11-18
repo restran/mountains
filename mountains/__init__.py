@@ -7,10 +7,10 @@ from .base import PY2, PY3, PYPY, string_types, integer_types, \
 from .encoding import force_text, force_bytes
 
 __author__ = "restran <grestran@gmail.com>"
-__version__ = "0.6.2"
+__version__ = "0.6.5"
 
 __all__ = [
     '__author__', '__version__', 'PY2', 'PY3', 'PYPY',
     'string_types', 'integer_types', 'class_types', 'text_type',
-    'binary_type', 'long_type', 'BytesIO', 'force_text', 'force_bytes'
+    'binary_type', 'long_type', 'BytesIO', 'force_text', 'force_bytes',
 ]

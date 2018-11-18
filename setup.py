@@ -2,7 +2,7 @@
 # Created by restran on 2017/7/27
 from __future__ import unicode_literals
 import sys
-
+import os
 from setuptools import setup, find_packages
 
 from mountains import __version__
@@ -29,7 +29,12 @@ if sys.version_info < (3, 0):
 
 kwargs['install_requires'] = install_requires
 
-long_description = open('README.rst', 'r').read()
+if os.path.exists('README.rst'):
+    readme_file = 'README.rst'
+else:
+    readme_file = 'README.md'
+
+long_description = open(readme_file, 'r').read()
 
 setup(
     name='mountains',  # 文件名

@@ -4,7 +4,7 @@
 
 在开发Python的过程中经常会有一些常用的方法和工具类，因此将这些代码集成在一起，在开发新东西的时候就能直接调用，加速开发。
 
-![icon](docs/icon.png)
+<img src="docs/icon.png" style="margin-left: auto; margin-right: auto; display: block;">
 
 ## 安装
 
@@ -35,9 +35,9 @@ from mountains.datetime import converter
 
 date_str = '2016-10-30 12:30:30'
 dt = datetime(year=2016, month=10, day=30, hour=12, minute=30, second=30)
-
-ts = int(time.mktime(self.t))
-ts_ms = int(time.mktime(self.t) * 1000)
+t = dt.timetuple()
+ts = int(time.mktime(t))
+ts_ms = int(time.mktime(t) * 1000)
 
 # 字符串转 datetime
 dt = converter.str2datetime(date_str)
