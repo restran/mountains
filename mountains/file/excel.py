@@ -15,16 +15,17 @@ except:
     raise Exception('xlsxwriter is not installed')
 
 
-def read_excel(file_name, offset=1, sheet_index=0):
+def read_excel(file_name=None, file_contents=None, offset=1, sheet_index=0):
     """
     读取 Excel
+    :param file_contents:
     :param sheet_index:
     :param file_name:
     :param offset: 偏移，一般第一行是表头，不需要读取数据
     :return:
     """
     try:
-        workbook = xlrd.open_workbook(file_name)
+        workbook = xlrd.open_workbook(filename=file_name, file_contents=file_contents)
     except Exception as e:
         return None
 

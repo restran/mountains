@@ -4,23 +4,21 @@
 
 在开发Python的过程中经常会有一些常用的方法和工具类，因此将这些代码集成在一起，在开发新东西的时候就能直接调用，加速开发。
 
-<img src="docs/icon.png" style="margin-left: auto; margin-right: auto; display: block;">
+<img src="docs/icon.png" style="margin-left: auto; margin-right: auto; text-align: center; display: block;">
 
 ## 安装
 
-Python 2
-
     pip install mountains
-
-Python3
-
-    pip3 install mountains
 
 ## 功能
 
 1. Python 2-3 兼容，大部分代码都尽可能做了兼容
 2. 日期转换，各种日期、字符串、时间戳直接的转换
-
+3. SSHClient
+4. Tornado 的异步请求
+5. Random HTTP User Agent
+6. 文件、json 读写 
+7. ...
 
 
 ### 日期转换

@@ -19,7 +19,7 @@ class SSHClient(object):
                  key_pass=None, show_output=True, manual_connect=False, timeout=10):
         self.is_root = False
         self.host = host
-        self.port = port
+        self.port = int(port)
         self.username = username
         self.password = password
         self.ssh_session = paramiko.SSHClient()
