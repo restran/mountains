@@ -15,9 +15,10 @@ except:
     raise Exception('xlsxwriter is not installed')
 
 
-def read_excel(file_name=None, file_contents=None, offset=1, sheet_index=0):
+def read_excel(file_name=None, file_contents=None, offset=1, header_index=0, sheet_index=0):
     """
     读取 Excel
+    :param header_index: header 在哪一行
     :param file_contents:
     :param sheet_index:
     :param file_name:
@@ -36,7 +37,7 @@ def read_excel(file_name=None, file_contents=None, offset=1, sheet_index=0):
 
     raw_data = []
     n_rows = sh.nrows
-    row = sh.row_values(0)
+    row = sh.row_values(header_index)
     header = []
     for t in row:
         t = t.strip().lower()
