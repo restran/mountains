@@ -17,7 +17,7 @@
 3. SSHClient
 4. Tornado 的异步请求
 5. Random HTTP User Agent
-6. 文件、json 读写 
+6. 文件、Excel、json 读写 
 7. ...
 
 
@@ -71,5 +71,32 @@ logger = logging.getLogger(__name__)
 logger.debug('hello')
 ```
 
+## Excel 读写
 
+```python
+from mountains.file.excel import read_excel, write_excel, edit_excel
+# 读 Excel 文件
+data = read_excel('filename.xlsx')
+
+# 写新的 Excel
+excel_data = [
+    {
+        'col1': '123',
+        'col2': '456'
+    },
+    {
+        'col1': '123',
+        'col2': '456'
+    },
+]
+
+headers = ['col1', 'col2']
+write_excel(headers, excel_data, 'filename.xlsx')
+
+# 编辑 Excel，打开已有的 Excel，往里面填充数据
+edit_data = {
+    'I2': '123'
+}
+edit_excel('test.xlsx', sheet_index=0, data=edit_data, output_filename='new_test.xlsx')
+```
 
