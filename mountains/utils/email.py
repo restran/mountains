@@ -9,7 +9,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
 
-from mountains import BytesIO, PY2
+from .. import BytesIO, PY2
 
 logger = logging.getLogger(__name__)
 
