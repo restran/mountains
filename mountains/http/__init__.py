@@ -13,20 +13,63 @@ from ..encoding import force_bytes
 
 DEFAULT_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2983.0 Safari/537.36'
 
-USER_AGENTS = None
+GLOBAL_USER_AGENTS = {}
 
-USER_AGENT_DATA_PATH = os.path.join(__base_path, 'http/data/user-agents.txt')
+USER_AGENT_DATA_PATH = os.path.join(__base_path, 'http/data/user_agents.txt')
+MOBILE_USER_AGENT_DATA_PATH = os.path.join(__base_path, 'http/data/mobile_ua.txt')
 
 
-def random_agent():
+def random_agent(agent_type='pc'):
     """
     随机获取一个 User-Agent
     :return:
     """
-    global USER_AGENTS
-    if USER_AGENTS is None:
-        USER_AGENTS = read_dict(USER_AGENT_DATA_PATH)
-    return random.choice(USER_AGENTS)
+    agent_type = agent_type.lower()
+    if agent_type in ('wexin', 'wx'):
+        agent_type = 'wechat'
+
+    if agent_type in ('ios',):
+        agent_type = 'iphone'
+
+    global GLOBAL_USER_AGENTS
+    if agent_type not in GLOBAL_USER_AGENTS:
+        if agent_type == 'pc':
+            GLOBAL_USER_AGENTS[agent_type] = read_dict(USER_AGENT_DATA_PATH)
+        elif agent_type in ('mobile', 'wechat', 'android', 'iphone', 'alipay'):
+            if 'mobile' not in GLOBAL_USER_AGENTS['mobile']:
+                GLOBAL_USER_AGENTS['mobile'] = read_dict(MOBILE_USER_AGENT_DATA_PATH)
+            mobile_data = GLOBAL_USER_AGENTS['mobile']
+
+            if agent_type == 'wechat':
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'MicroMessenger' in mobile_data]
+            elif agent_type == 'alipay':
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'Alipay' in mobile_data]
+            elif agent_type == 'android':
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'Android' in mobile_data]
+            elif agent_type == 'iphone':
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'iPhone' in mobile_data]
+            else:
+                GLOBAL_USER_AGENTS[agent_type] = mobile_data
+        else:
+            return DEFAULT_USER_AGENT
+
+    return random.choice(GLOBAL_USER_AGENTS[agent_type])
+
+
+def random_wx_agent():
+    """
+    返回一个微信的UserAgent
+    :return:
+    """
+    return random_agent('wechat')
+
+
+def random_mobile_agent():
+    """
+    返回一个手机端的UserAgent
+    :return:
+    """
+    return random_agent('mobile')
 
 
 def request(method, url, headers=None, data=None, session=None):

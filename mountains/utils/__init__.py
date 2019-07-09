@@ -2,7 +2,10 @@
 # Created by restran on 2017/9/15
 from __future__ import unicode_literals, absolute_import, print_function
 from .. import force_text, text_type, binary_type
+
 import itertools
+
+__all__ = ['grouper', 'any_none', 'any_in', 'text_type_dict', 'PrintCollector', 'ObjectDict']
 
 
 def grouper(iterable, size):
@@ -28,6 +31,10 @@ def grouper(iterable, size):
 
 def any_none(*params):
     return any(map(lambda x: x is None, params))
+
+
+def any_in(obj, *params):
+    return any(map(lambda x: x in obj, params))
 
 
 def text_type_dict(dict_data):

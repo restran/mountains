@@ -56,6 +56,19 @@ class SSHClient(object):
 
         return self.sftp
 
+    def dispose(self):
+        try:
+            if self.sftp is not None:
+                self.sftp.close()
+        except:
+            pass
+
+        try:
+            if self.ssh_session is not None:
+                self.ssh_session.close()
+        except:
+            pass
+
     @classmethod
     def clean_ssh_line_output(cls, line):
         line = line.strip()
@@ -138,7 +151,7 @@ class SSHClient(object):
 
     def check_sudo(self):
         """
-        TODO 有问题
+        TODO 有问题，应该检查用户组
         :return:
         """
         stdin, stdout, stderr = self.ssh_session.exec_command('sudo whoami')
@@ -168,6 +181,11 @@ class SSHClient(object):
             logger.error(e)
 
     def change_password(self, new_password):
+        """
+        TODO: 一句话修改密码 echo username:new_password | chpasswd
+        :param new_password:
+        :return:
+        """
         is_root = self.check_root()
         if is_root[0]:
             self.is_root = True

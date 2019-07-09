@@ -12,7 +12,8 @@ kwargs = {
     # 还需要创建一个 MANIFEST.in 的文件，然后将这些数据也放在那里
     'package_data': {
         'mountains.http': [
-            'data/user-agents.txt'
+            'data/user_agents.txt',
+            'data/mobile_ua.txt'
         ],
     }
 }
@@ -28,12 +29,7 @@ if sys.version_info < (3, 0):
     install_requires.append('futures')
 
 kwargs['install_requires'] = install_requires
-
-if os.path.exists('README.rst'):
-    readme_file = 'README.rst'
-else:
-    readme_file = 'README.md'
-
+readme_file = 'README.md'
 long_description = open(readme_file, 'r').read()
 
 setup(
@@ -41,6 +37,7 @@ setup(
     version=__version__,  # 版本(每次更新上传 pypi 需要修改)
     description="a util collection for python developing",
     long_description=long_description,  # 放README.md文件，方便在 pypi 页展示
+    long_description_content_type='text/markdown',
     classifiers=[
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',

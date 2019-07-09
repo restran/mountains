@@ -32,6 +32,11 @@ class UtilsTest(unittest.TestCase):
         r = string_utils.fixed_length_split(s, 16)
         self.assertEqual(r, ['aaaabbbbccccdddd'])
 
+    def test_is_empty(self):
+        self.assertEqual(string_utils.is_empty(''), True)
+        self.assertEqual(string_utils.is_empty(None), True)
+        self.assertEqual(string_utils.is_empty('aaa'), False)
+
 
 if __name__ == '__main__':
     unittest.main()

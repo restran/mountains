@@ -17,7 +17,7 @@ if PY3:
     text_type = str
     binary_type = bytes
     long_type = int
-    from io import BytesIO
+    from io import BytesIO, StringIO
     from urllib.parse import urlencode, quote, \
         quote_plus, urlparse, urlunparse
     MAXSIZE = sys.maxsize
@@ -28,7 +28,8 @@ else:
     text_type = unicode
     binary_type = str
     long_type = long
-    from cStringIO import StringIO as BytesIO
+    from cStringIO import StringIO
+    from io import BytesIO
     from urllib import urlencode, quote, quote_plus
     from urlparse import urlparse, urlunparse
 
@@ -37,7 +38,7 @@ __base_path = os.path.dirname(os.path.abspath(__file__))
 
 __all__ = [
     'PY2', 'PY3', 'PYPY', 'urlencode', 'quote', 'quote_plus',
-    'urlparse', 'urlunparse',
+    'urlparse', 'urlunparse', 'StringIO',
     'string_types', 'integer_types', 'class_types', 'text_type',
     'binary_type', 'long_type', 'BytesIO', '__base_path'
 ]

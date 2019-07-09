@@ -3,14 +3,14 @@
 from __future__ import unicode_literals, absolute_import
 
 from .base import PY2, PY3, PYPY, string_types, integer_types, \
-    class_types, text_type, binary_type, long_type, BytesIO
+    class_types, text_type, binary_type, long_type, BytesIO, StringIO
 from .encoding import force_text, force_bytes
 
 __author__ = "restran <grestran@gmail.com>"
-__version__ = "0.6.6"
+__version__ = "0.7.0"
 
 __all__ = [
     '__author__', '__version__', 'PY2', 'PY3', 'PYPY',
-    'string_types', 'integer_types', 'class_types', 'text_type',
+    'string_types', 'integer_types', 'class_types', 'text_type', 'StringIO',
     'binary_type', 'long_type', 'BytesIO', 'force_text', 'force_bytes',
 ]

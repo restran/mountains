@@ -18,6 +18,11 @@ class UtilsTest(unittest.TestCase):
         self.assertEqual(any_none(1, 2, 3, None), True)
         self.assertEqual(any_none(1, 2, 3), False)
 
+    def test_any_in(self):
+        self.assertEqual(any_in('123abc123', 'a', 'b'), True)
+        self.assertEqual(any_in('123ab123', 'a', 'c'), True)
+        self.assertEqual(any_in('123', 'a', 'b', 'c'), False)
+
 
 if __name__ == '__main__':
     unittest.main()

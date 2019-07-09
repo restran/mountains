@@ -170,3 +170,20 @@ def edit_excel(file_name=None, sheet_index=0, sheet_name=None, data=None, output
         wb.save(file_name)
 
     wb.close()
+
+
+def to_excel_column_no(index, index_start_1=False):
+    """
+    Excel 列编号是: A, B, ..., AA, ..., BA
+    index 编号默认从1开始
+    """
+    if index_start_1:
+        index -= 1
+    y = ''
+    s = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    while index >= 0:
+        y += s[index % 26]
+        index = index // 26 - 1
+
+    return y[::-1]
