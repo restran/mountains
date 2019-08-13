@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/7/27
 from __future__ import unicode_literals
+
 import sys
-import os
+
+from future.utils import bytes_to_native_str
 from setuptools import setup, find_packages
 
 from mountains import __version__
@@ -10,12 +12,8 @@ from mountains import __version__
 kwargs = {
     'packages': find_packages(),
     # 还需要创建一个 MANIFEST.in 的文件，然后将这些数据也放在那里
-    'package_data': {
-        'mountains.http': [
-            'data/user_agents.txt',
-            'data/mobile_ua.txt'
-        ],
-    }
+    # package_data 添加了配置，Python2会报错
+    'package_data': {}
 }
 
 install_requires = [
@@ -30,13 +28,13 @@ if sys.version_info < (3, 0):
 
 kwargs['install_requires'] = install_requires
 readme_file = 'README.md'
-long_description = open(readme_file, 'r').read()
+long_description = open(readme_file, 'rb').read()
 
 setup(
     name='mountains',  # 文件名
     version=__version__,  # 版本(每次更新上传 pypi 需要修改)
     description="a util collection for python developing",
-    long_description=long_description,  # 放README.md文件，方便在 pypi 页展示
+    long_description=bytes_to_native_str(long_description),  # 放README.md文件，方便在 pypi 页展示
     long_description_content_type='text/markdown',
     classifiers=[
         'Programming Language :: Python :: 2',

@@ -10,7 +10,7 @@ __all__ = ['read_csv', 'read_csv_as_dict', 'write_csv', 'write_csv_from_dict']
 def read_csv(filepath_or_buffer, encoding=None, delimiter=',', quotechar='"'):
     """
     读 CSV 文件
-    :param encoding:
+    :param encoding: 设置编码，如果文件是UTF-8 with BOM，encoding 使用 utf-8-sig
     :param filepath_or_buffer:
     :param delimiter:
     :param quotechar:
@@ -30,6 +30,15 @@ def read_csv(filepath_or_buffer, encoding=None, delimiter=',', quotechar='"'):
 
 
 def read_csv_as_dict(filepath_or_buffer, headers=None, encoding=None, delimiter=',', quotechar='"'):
+    """
+
+    :param filepath_or_buffer:
+    :param headers: 首行字段列表
+    :param encoding: 设置编码，如果文件是UTF-8 with BOM，encoding 使用 utf-8-sig
+    :param delimiter: 字段分隔符
+    :param quotechar:
+    :return:
+    """
     if isinstance(filepath_or_buffer, str):
         with open(filepath_or_buffer, 'r', encoding=encoding) as csv_file:
             reader = csv.DictReader(csv_file, fieldnames=headers,
