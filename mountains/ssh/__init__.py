@@ -16,7 +16,19 @@ logger = logging.getLogger(__name__)
 
 class SSHClient(object):
     def __init__(self, host, port, username, password=None, key_file=None,
-                 key_pass=None, show_output=True, manual_connect=False, timeout=10):
+                 key_pass=None, show_output=False, manual_connect=False, timeout=10):
+        """
+
+        :param host:
+        :param port:
+        :param username:
+        :param password:
+        :param key_file:
+        :param key_pass:
+        :param show_output: 是否显示命令的执行结果
+        :param manual_connect:
+        :param timeout:
+        """
         self.is_root = False
         self.host = host
         self.port = int(port)
@@ -125,21 +137,23 @@ class SSHClient(object):
                         break
 
             buff = force_text(buff)
-            logger.info(buff)
+            if self.show_output:
+                logger.info(buff)
             return buff
-
-        logger.info(cmd)
+        if self.show_output:
+            logger.info(cmd)
         shell.send(cmd)
         time.sleep(wait_seconds)
         return receive()
 
     def run_nohup(self, cmd, working_dir=None):
         """
+        使用重定向输出，正常输出和错误信息都不显示，不会创建 nuhup.out，>/dev/null 2>&1
         :param cmd:
         :param working_dir: 当前的工作目录，如果没有 home 目录，会因为一些原因导致运行失败，比如没有无法创建 nohup.out
         :return:
         """
-        cmd = 'nohup %s &\n\n' % cmd
+        cmd = 'nohup %s >/dev/null 2>&1 &\n\n' % cmd
         if working_dir is not None:
             cmd = 'cd {}; {}'.format(working_dir, cmd)
 
@@ -177,12 +191,14 @@ class SSHClient(object):
             self.run(cmd)
             cmd = "chmod 600 ~/.ssh/authorized_keys"
             self.run(cmd)
+            return True
         except Exception as e:
             logger.error(e)
+            return False
 
     def change_password(self, new_password):
         """
-        TODO: 一句话修改密码 echo username:new_password | chpasswd
+        一句话修改密码，但是只有 root 才有权限 echo username:new_password | chpasswd
         :param new_password:
         :return:
         """
@@ -229,10 +245,12 @@ class SSHClient(object):
         sftp = self.get_sftp()
         try:
             sftp.put(local_file, remote_file)
+            return True
         except Exception as e:
             logger.error('上传文件失败')
             logger.error('remote: %s, local: %s' % (remote_file, local_file))
             logger.error(e)
+            return False
 
     def get(self, remote_file, local_file):
         """
@@ -244,7 +262,9 @@ class SSHClient(object):
         sftp = self.get_sftp()
         try:
             sftp.get(remote_file, local_file)
+            return True
         except Exception as e:
             logger.error('下载文件失败')
             logger.error('remote: %s, local: %s' % (remote_file, local_file))
             logger.error(e)
+            return False
