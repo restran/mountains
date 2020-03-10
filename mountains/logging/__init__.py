@@ -88,6 +88,10 @@ class ColorStreamHandler(BaseHandler):
         super(ColorStreamHandler, self).__init__(level, format, datefmt)
         self.format = '%(log_color)s' + self.format
         self.handler_class = 'colorlog.StreamHandler'
+        try:
+            import colorlog
+        except:
+            raise Exception('colorlog not installed')
 
     def get_formatter(self):
         formatter = {

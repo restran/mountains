@@ -36,7 +36,7 @@ def random_agent(agent_type='pc'):
         if agent_type == 'pc':
             GLOBAL_USER_AGENTS[agent_type] = read_dict(USER_AGENT_DATA_PATH)
         elif agent_type in ('mobile', 'wechat', 'android', 'iphone', 'alipay'):
-            if 'mobile' not in GLOBAL_USER_AGENTS['mobile']:
+            if 'mobile' not in GLOBAL_USER_AGENTS:
                 GLOBAL_USER_AGENTS['mobile'] = read_dict(MOBILE_USER_AGENT_DATA_PATH)
             mobile_data = GLOBAL_USER_AGENTS['mobile']
 
@@ -174,8 +174,13 @@ def query_str_2_dict(query_str):
         query_list = query_str.split('&')
         query_dict = {}
         for t in query_list:
-            x = t.split('=')
-            query_dict[x[0]] = x[1]
+            # 避免在非法查询字符串的情况下报错
+            # 例如未对url参数转义
+            try:
+                x = t.split('=')
+                query_dict[x[0]] = x[1]
+            except:
+                pass
     else:
         query_dict = {}
     return query_dict

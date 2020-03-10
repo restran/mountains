@@ -114,6 +114,15 @@ def dec2hex(s):
 
     return ''.join([str(x) for x in mid[::-1]])
 
+def byte2hex(s):
+    """
+    字节类型的数据转成16进制字符串
+    :param s:
+    :return:
+    """
+
+    result = binascii.b2a_hex(s)
+    return force_text(result)
 
 def hex2bin(s):
     """
@@ -133,6 +142,9 @@ def hex2bin(s):
         # 每个16进制值（2个字符）进行转码，不足8个的，在前面补0
         x = '%s%s' % ('0' * padding_length, x)
         result.append(x)
+
+    if result == '':
+        result = '00000000'
 
     return ''.join(result)
 

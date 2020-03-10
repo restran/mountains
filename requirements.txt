@@ -1,4 +1,1 @@
-future
 requests
-simplejson
-colorlog

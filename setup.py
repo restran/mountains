@@ -18,9 +18,6 @@ kwargs = {
 
 install_requires = [
     'requests',
-    'future',
-    'simplejson',
-    'colorlog',
 ]
 
 if sys.version_info < (3, 0):

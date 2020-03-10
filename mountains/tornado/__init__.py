@@ -7,8 +7,8 @@ import platform
 import time
 from collections import deque
 
-from future.moves.urllib.parse import urlunparse, urlparse, urlencode
-from mountains import json as json_util
+from ..base import urlunparse, urlparse, urlencode
+from .. import json as json_util
 from .. import force_text
 from ..http import random_agent
 

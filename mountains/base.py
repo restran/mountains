@@ -17,9 +17,11 @@ if PY3:
     text_type = str
     binary_type = bytes
     long_type = int
+    from queue import Queue
     from io import BytesIO, StringIO
     from urllib.parse import urlencode, quote, \
         quote_plus, urlparse, urlunparse
+
     MAXSIZE = sys.maxsize
 else:
     string_types = basestring,
@@ -32,13 +34,46 @@ else:
     from io import BytesIO
     from urllib import urlencode, quote, quote_plus
     from urlparse import urlparse, urlunparse
+    from Queue import Queue
 
 # 当前项目所在路径
 __base_path = os.path.dirname(os.path.abspath(__file__))
+
+
+def iteritems(obj, **kwargs):
+    """Use this only if compatibility with Python versions before 2.7 is
+    required. Otherwise, prefer viewitems().
+    """
+    func = getattr(obj, "iteritems", None)
+    if not func:
+        func = obj.items
+    return func(**kwargs)
+
+
+def iterkeys(obj, **kwargs):
+    """Use this only if compatibility with Python versions before 2.7 is
+    required. Otherwise, prefer viewkeys().
+    """
+    func = getattr(obj, "iterkeys", None)
+    if not func:
+        func = obj.keys
+    return func(**kwargs)
+
+
+def itervalues(obj, **kwargs):
+    """Use this only if compatibility with Python versions before 2.7 is
+    required. Otherwise, prefer viewvalues().
+    """
+    func = getattr(obj, "itervalues", None)
+    if not func:
+        func = obj.values
+    return func(**kwargs)
+
 
 __all__ = [
     'PY2', 'PY3', 'PYPY', 'urlencode', 'quote', 'quote_plus',
     'urlparse', 'urlunparse', 'StringIO',
     'string_types', 'integer_types', 'class_types', 'text_type',
-    'binary_type', 'long_type', 'BytesIO', '__base_path'
+    'binary_type', 'long_type', 'BytesIO', '__base_path', 'Queue',
+    'iteritems', 'iterkeys', 'itervalues'
 ]

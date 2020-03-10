@@ -5,7 +5,7 @@ from __future__ import unicode_literals, absolute_import
 import time
 from concurrent import futures
 
-from future.moves.queue import Queue
+from ..base import Queue
 
 
 class TaskExecutor(object):

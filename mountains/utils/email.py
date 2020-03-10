@@ -8,6 +8,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
+from email.header import make_header
 
 from .. import BytesIO, PY2
 
@@ -60,15 +61,14 @@ class EmailHandler(object):
         msg['Subject'] = subject
         # 如果 content 是 html，则需要设置 _subtype='html'
         # 默认情况下 _subtype='plain'，即纯文本
-        msg.attach(MIMEText(content, _charset='utf-8'))
+        msg.attach(MIMEText(content, _charset='UTF-8'))
         for fn in file_name_list:
-            part = MIMEText(open(fn, 'rb').read(), 'base64', 'utf-8')
+            part = MIMEText(open(fn, 'rb').read(), 'base64', 'UTF-8')
             part["Content-Type"] = 'application/octet-stream'
             basename = os.path.basename(fn)
-            if PY2:
-                basename = basename.encode('gb2312')
-            # 文件名使用 gb2312 编码，否则会没有附件
-            part.add_header('Content-Disposition', 'attachment', filename=('gb2312', '', basename))
+            # 解决一些邮箱在手机客户端上，附件文件名丢失的问题
+            part["Content-Type"] = 'application/octet-stream;name="%s"'% make_header([(basename,'UTF-8')]).encode('UTF-8')
+            part["Content-Disposition"] = 'attachment;filename="%s"' % make_header([(basename, 'UTF-8')]).encode('UTF-8')
             msg.attach(part)
         smtp.sendmail(self.mail_from, mail_to_list, msg.as_string())
         smtp.close()

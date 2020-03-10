@@ -4,9 +4,7 @@ from __future__ import unicode_literals, absolute_import
 
 from datetime import datetime
 
-from future.utils import iteritems
-
-from ..base import BytesIO
+from ..base import BytesIO, text_type, iteritems
 from ..file import write_bytes_file
 
 __all__ = ['read_excel', 'write_excel', 'edit_excel']
@@ -49,7 +47,7 @@ def read_excel(file_name=None, file_contents=None, offset=1, header_index=0, she
     row = sh.row_values(header_index)
     header = []
     for t in row:
-        t = str(t).strip().lower()
+        t = text_type(t).strip().lower()
         header.append(t)
 
     # n_cols = sh.ncols

@@ -10,7 +10,7 @@ try:
 except ImportError:
     raise Exception('django is not installed')
 
-from future.utils import iteritems
+from ..base import iteritems
 
 MAX_PAGE_SIZE = 100
 
@@ -193,12 +193,16 @@ def model_to_page_list(model_class, page_num,
 
         paginator = Paginator(objects, page_size)
         try:
-            json_list = paginator.page(page_num)
+            obj_list = paginator.page(page_num)
         except EmptyPage as e:
-            json_list = []
+            obj_list = []
     else:
-        json_list = list(objects)
+        obj_list = list(objects)
 
     if select_related_fields is not None or values is not None:
-        json_list = [object_set_dict_data(model_class, t) for t in json_list]
-    return [getattr(t, to_json_method)() for t in json_list]
+        obj_list = [object_set_dict_data(model_class, t) for t in obj_list]
+    
+    if to_json_method is None:
+        return obj_list
+    else:
+        return [getattr(t, to_json_method)() for t in obj_list]
