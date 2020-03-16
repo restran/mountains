@@ -46,10 +46,7 @@ def json_default(obj):
 
 
 def loads(content, encoding='utf-8', **kwargs):
-    if PY3:
-        return json.loads(s=force_bytes(content), encoding=encoding, **kwargs)
-    else:
-        return json.loads(s=content, encoding=encoding, **kwargs)
+    return json.loads(s=content, encoding=encoding, **kwargs)
 
 
 def dumps(dict_data, ensure_ascii=True, indent=None,

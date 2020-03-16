@@ -4,7 +4,9 @@ python:
     - pypy
     - 3.4
     - 3.5
-
+    - 3.6
+    - 3.7
+    - 3.8
 _base_envs:
 - &pypy_base
   python: pypy
@@ -50,8 +52,6 @@ _base_envs:
 matrix:
   fast_finish: true
   include:
-  - python: 3.6
-    env: TOXENV=pre-commit
   - <<: *pypy_base
     python: pypy3
     env:

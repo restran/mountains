@@ -5,7 +5,7 @@ from __future__ import unicode_literals, absolute_import
 import logging
 import unittest
 
-from mountains.utils import *
+from mountains.utils import any_in, any_none
 
 logger = logging.getLogger(__name__)
 

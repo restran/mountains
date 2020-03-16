@@ -2,7 +2,7 @@
 # Created by restran on 2017/11/7
 from __future__ import unicode_literals, absolute_import
 from ..encoding import force_bytes
-from .. import PY2
+from .. import PY2, string_types
 
 
 def fixed_length_split(s, width):
