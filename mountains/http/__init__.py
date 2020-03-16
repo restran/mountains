@@ -24,7 +24,7 @@ def random_agent(agent_type='pc'):
     随机获取一个 User-Agent
     :return:
     """
-    agent_type = agent_type.lower()
+    agent_type = agent_type.lower().strip()
     if agent_type in ('wexin', 'wx'):
         agent_type = 'wechat'
 
@@ -37,17 +37,17 @@ def random_agent(agent_type='pc'):
             GLOBAL_USER_AGENTS[agent_type] = read_dict(USER_AGENT_DATA_PATH)
         elif agent_type in ('mobile', 'wechat', 'android', 'iphone', 'alipay'):
             if 'mobile' not in GLOBAL_USER_AGENTS:
-                GLOBAL_USER_AGENTS['mobile'] = read_dict(MOBILE_USER_AGENT_DATA_PATH)
+                GLOBAL_USER_AGENTS['mobile'] = list(read_dict(MOBILE_USER_AGENT_DATA_PATH))
             mobile_data = GLOBAL_USER_AGENTS['mobile']
 
             if agent_type == 'wechat':
-                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'MicroMessenger' in mobile_data]
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'MicroMessenger' in t]
             elif agent_type == 'alipay':
-                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'Alipay' in mobile_data]
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'Alipay' in t]
             elif agent_type == 'android':
-                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'Android' in mobile_data]
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'Android' in t]
             elif agent_type == 'iphone':
-                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'iPhone' in mobile_data]
+                GLOBAL_USER_AGENTS[agent_type] = [t for t in mobile_data if 'iPhone' in t]
             else:
                 GLOBAL_USER_AGENTS[agent_type] = mobile_data
         else:

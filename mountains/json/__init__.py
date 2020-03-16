@@ -14,8 +14,12 @@ from .. import PY3, text_type, force_bytes
 
 try:
     import simplejson as json
+
+    simplejson_imported = True
 except ImportError:
     import json
+
+    simplejson_imported = False
 
 
 def json_default(obj):
@@ -59,7 +63,11 @@ def dumps(dict_data, ensure_ascii=True, indent=None,
     :param dict_data:
     :return:
     """
-
-    return json.dumps(dict_data, default=json_default,
-                      ensure_ascii=ensure_ascii, indent=indent,
-                      sort_keys=sort_keys, encoding=encoding, **kwargs)
+    if simplejson_imported:
+        return json.dumps(dict_data, default=json_default,
+                          ensure_ascii=ensure_ascii, indent=indent,
+                          sort_keys=sort_keys, encoding=encoding, **kwargs)
+    else:
+        return json.dumps(dict_data, default=json_default,
+                          ensure_ascii=ensure_ascii, indent=indent,
+                          sort_keys=sort_keys, **kwargs)
