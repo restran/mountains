@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/11/7
 from __future__ import unicode_literals, absolute_import
-from ..encoding import force_bytes
+from ..encoding import force_bytes, text_type, force_text
 from .. import PY2, string_types
 
 
@@ -30,7 +30,7 @@ def line_break(s, length=76):
 
 
 def is_empty(s):
-    if s == '' or s is None or not isinstance(s, str):
+    if s == '' or s == b'' or s is None or not isinstance(s, text_type):
         return True
     else:
         return False
