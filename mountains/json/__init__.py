@@ -5,8 +5,7 @@ from __future__ import unicode_literals, absolute_import
 import uuid
 from datetime import datetime
 from decimal import Decimal
-
-from .. import PY3, text_type, force_bytes
+from .. import text_type, PY3, force_text
 
 # https://github.com/esnme/ultrajson
 # ujson 速度比较快，但是有些参数没有，与 simplejson 和 json 不完全兼容
@@ -46,6 +45,8 @@ def json_default(obj):
 
 
 def loads(content, encoding='utf-8', **kwargs):
+    if PY3:
+        content = force_text(content)
     return json.loads(s=content, encoding=encoding, **kwargs)
 
 

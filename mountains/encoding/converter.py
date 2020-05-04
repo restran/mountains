@@ -3,6 +3,7 @@
 from __future__ import unicode_literals, absolute_import
 
 import binascii
+import struct
 from xml.sax.saxutils import escape as xml_escape_func
 from xml.sax.saxutils import unescape as xml_unescape_func
 
@@ -105,14 +106,8 @@ def dec2hex(s):
         num = int(s)
     else:
         num = s
-    mid = []
-    while True:
-        if num == 0:
-            break
-        num, rem = divmod(num, 16)
-        mid.append(base[rem])
+    return hex(num)[2:]
 
-    return ''.join([str(x) for x in mid[::-1]])
 
 def byte2hex(s):
     """
@@ -123,6 +118,7 @@ def byte2hex(s):
 
     result = binascii.b2a_hex(s)
     return force_text(result)
+
 
 def hex2bin(s):
     """
@@ -254,54 +250,12 @@ def str2int(number_str, default_value=None):
         return default_value
 
 
-def s2n(s):
-    """
-    String to number.
-    """
-    if not len(s):
-        return 0
-    return int(s.encode("hex"), 16)
-
-
-def n2s(n):
-    """
-    Number to string.
-    """
-    s = hex(n)[2:].rstrip("L")
-    if len(s) % 2 != 0:
-        s = "0" + s
-    return s.decode("hex")
-
-
-def s2b(s):
-    """
-    String to binary.
-    """
-    ret = []
-    for c in s:
-        ret.append(bin(ord(c))[2:].zfill(8))
-    return "".join(ret)
-
-
-def b2s(b):
-    """
-    Binary to string.
-    """
-    ret = []
-    for pos in range(0, len(b), 8):
-        ret.append(chr(int(b[pos:pos + 8], 2)))
-    return "".join(ret)
-
-
-import struct
-
-
-def long_to_bytes(n, blocksize=0):
+def long2bytes(n, block_size=0):
     """Convert an integer to a byte string.
 
     In Python 3.2+, use the native method instead::
 
-        >>> n.to_bytes(blocksize, 'big')
+        >>> n.to_bytes(block_size, 'big')
 
     For instance::
 
@@ -334,12 +288,12 @@ def long_to_bytes(n, blocksize=0):
     s = s[i:]
     # add back some pad bytes.  this could be done more efficiently w.r.t. the
     # de-padding being done above, but sigh...
-    if blocksize > 0 and len(s) % blocksize:
-        s = (blocksize - len(s) % blocksize) * b'\000' + s
+    if block_size > 0 and len(s) % block_size:
+        s = (block_size - len(s) % block_size) * b'\000' + s
     return s
 
 
-def bytes_to_long(s):
+def bytes2long(s):
     """Convert a byte string to a long integer (big endian).
 
     In Python 3.2+, use the native method instead::

@@ -84,7 +84,7 @@ class StreamHandler(BaseHandler):
 
 
 class ColorStreamHandler(BaseHandler):
-    def __init__(self, level=DEBUG, format=None, datefmt=None):
+    def __init__(self, level=DEBUG, format=None, datefmt=None, log_colors=None):
         super(ColorStreamHandler, self).__init__(level, format, datefmt)
         self.format = '%(log_color)s' + self.format
         self.handler_class = 'colorlog.StreamHandler'
@@ -93,20 +93,24 @@ class ColorStreamHandler(BaseHandler):
         except:
             raise Exception('colorlog not installed')
 
+        if log_colors is None:
+            log_colors = {
+                'DEBUG': 'white',
+                'INFO': 'green',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                # 'CRITICAL': 'red',
+                'CRITICAL': 'red, bg_white',
+            }
+        self.log_colors = log_colors
+
     def get_formatter(self):
         formatter = {
             self.get_formatter_name(): {
                 '()': 'colorlog.ColoredFormatter',
                 'format': self.format,
                 'datefmt': self.datefmt,
-                'log_colors': {
-                    'DEBUG': 'white',
-                    'INFO': 'white',
-                    'WARNING': 'green',
-                    'ERROR': 'yellow',
-                    'CRITICAL': 'red',
-                    # 'CRITICAL': 'red, bg_white',
-                }
+                'log_colors': self.log_colors
             }
         }
 
