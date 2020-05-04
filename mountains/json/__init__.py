@@ -44,8 +44,14 @@ def json_default(obj):
     raise TypeError("%r is not JSON serializable" % obj)
 
 
+load = json.load
+dump = json.dump
+
+
 def loads(content, encoding='utf-8', **kwargs):
     if PY3:
+        # python3.5，json loads 必须为str类型，如果为bytes类型会报错
+        # python3.7，json loads 支持str类型和bytes类型
         content = force_text(content)
     return json.loads(s=content, encoding=encoding, **kwargs)
 
