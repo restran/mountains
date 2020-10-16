@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Created by restran on 2017/8/23
 from __future__ import unicode_literals, absolute_import
-
+import re
 from ..base import text_type, string_types
+import string
+from base64 import b64decode, b32decode
 
 _UTF8_TYPES = (bytes, type(None))
 
@@ -69,3 +71,49 @@ def force_bytes(s, encoding=None):
     """
 
     return utf8(s, encoding)
+
+
+def is_base64(s, is_printable=True):
+    if len(s) % 4 != 0:
+        return False
+
+    b64rex = re.compile('^[A-Za-z0-9+/]+[=]{0,2}$', re.MULTILINE)
+    if not b64rex.match(s):
+        return False
+
+    if is_printable:
+        try:
+            a = b64decode(s.encode()).decode()
+            for c in a:
+                if c not in string.printable:
+                    return False
+        except:
+            return False
+    return True
+
+
+def is_base32(s, is_printable=True):
+    if len(s) % 8 != 0:
+        return False
+
+    rex = re.compile('^[A-Z2-7]+[=]{0,7}$', re.MULTILINE)
+    if not rex.match(s):
+        return False
+
+    if is_printable:
+        try:
+            a = b32decode(s.encode()).decode()
+            for c in a:
+                if c not in string.printable:
+                    return False
+        except:
+            return False
+    return True
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()

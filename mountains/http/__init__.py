@@ -184,3 +184,12 @@ def query_str_2_dict(query_str):
     else:
         query_dict = {}
     return query_dict
+
+
+def raw_headers_to_dict(raw_headers):
+    """
+    通过原生请求头获取请求头字典
+    :param raw_headers: {str} 浏览器请求头
+    :return: {dict} headers
+    """
+    return dict(line.split(": ", 1) for line in raw_headers.split("\n") if ': ' in line)

@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 
 import unittest
 
-from mountains.encoding import converter
+from mountains.encoding import converter, is_base64, is_base32
 
 
 class Test(unittest.TestCase):
@@ -73,6 +73,36 @@ class Test(unittest.TestCase):
                 r = converter.to_digital(i, j)
                 x = converter.from_digital(r, j)
                 self.assertEqual(str(i), x)
+
+    def test_is_base64(self):
+        data = [
+            ("Y2QgL2QgIkM6L2luZXRwdWIvd3d3cm9vdCImd2hvYW1pJmVjaG8gW1NdJmNkJmVjaG8gW0Vd", True),
+            ("Qzov", True),
+            ("123", False),
+            ("Y21k", True),
+            ("0000", False),
+            ("QzovaW5ldHB1Yi93d3dyb290Lw==", True),
+            ("QzovaW5ldHB1Yi8=", True),
+            ("aHR0cDovLzExOC4zMS42Ni4yMy8yMDIwc2tpbGwvYS5leGU=", True)
+        ]
+
+        for (s, real_r) in data:
+            r = is_base64(s)
+            self.assertEqual(r, real_r)
+
+    def test_is_base32(self):
+        data = [
+            ("GFQWCYLB", True),
+            ("1", False),
+            ("123", False),
+            ("GE======", True),
+            ("0000", False),
+            ("GFQXGZDGMFZWIZTBONSGMYLTMRTGC43EMY======", True)
+        ]
+
+        for (s, real_r) in data:
+            r = is_base32(s)
+            self.assertEqual(r, real_r)
 
 
 if __name__ == '__main__':
