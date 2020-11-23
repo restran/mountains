@@ -61,6 +61,9 @@ class Test(unittest.TestCase):
         s = '616263646566'
         r = converter.hex2bin(s)
         self.assertEqual(r, '011000010110001001100011011001000110010101100110')
+        s = '00'
+        r = converter.hex2bin(s)
+        self.assertEqual(r, '00000000')
 
     def test_bin2hex(self):
         s = '011000010110001001100011011001000110010101100110'

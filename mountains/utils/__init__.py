@@ -30,10 +30,36 @@ def grouper(iterable, size):
 
 
 def any_none(*params):
+    """
+    >>> a = None
+    >>> b = 'abc'
+    >>> any_none(a, b)
+    True
+    >>> any_none(b)
+    False
+    """
     return any(map(lambda x: x is None, params))
 
 
+def any_empty(*params):
+    """
+    >>> a = None
+    >>> b = 'abc'
+    >>> any_none(a, b)
+    True
+    >>> any_none(b)
+    False
+    """
+    return any(map(lambda x: x in (None, '', False) or (iterable(x) and len(x) == 0), params))
+
+
 def any_in(obj, *params):
+    """
+    >>> any_in(['a', ''], '')
+    True
+    >>> any_in(['a', None], '', None)
+    True
+    """
     return any(map(lambda x: x in obj, params))
 
 

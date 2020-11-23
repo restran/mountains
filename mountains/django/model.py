@@ -4,6 +4,7 @@ from __future__ import unicode_literals, absolute_import
 
 import logging
 import traceback
+import math
 
 try:
     from django.core.paginator import Paginator, EmptyPage
@@ -201,8 +202,29 @@ def model_to_page_list(model_class, page_num,
 
     if select_related_fields is not None or values is not None:
         obj_list = [object_set_dict_data(model_class, t) for t in obj_list]
-    
+
     if to_json_method is None:
         return obj_list
     else:
         return [getattr(t, to_json_method)() for t in obj_list]
+
+
+def bulk_delete(model, delete_id_list, id_name='id', batch_size=200):
+    """
+    批量删除
+    :param model:
+    :param delete_id_list:
+    :param id_name: id的名称，一般是id
+    :param batch_size:
+    :return:
+    """
+    total = len(delete_id_list)
+    times = math.ceil(total * 1.0 / batch_size)
+    for i in range(times):
+        data_list = delete_id_list[i * batch_size:(i + 1) * batch_size]
+        if len(data_list) > 0:
+            id_list = [t for t in data_list]
+            filter_params = {
+                '{}__in'.format(id_name): id_list
+            }
+            model.objects.filter(**filter_params).delete()

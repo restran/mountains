@@ -128,7 +128,7 @@ def hex2bin(s):
     :return:
     """
     if len(s) % 2 != 0:
-        s += '0'
+        s = '0' + s
 
     result = []
     for i in range(len(s) // 2):
@@ -139,10 +139,8 @@ def hex2bin(s):
         x = '%s%s' % ('0' * padding_length, x)
         result.append(x)
 
-    if result == '':
-        result = '00000000'
-
-    return ''.join(result)
+    result = ''.join(result)
+    return result if result != '' else '00000000'
 
 
 def bin2hex(s):
