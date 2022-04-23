@@ -10,8 +10,9 @@ from ..file import write_bytes_file
 __all__ = ['read_excel', 'write_excel', 'edit_excel']
 
 
-def read_excel(file_name=None, file_contents=None, offset=1, header_index=0, sheet_index=0, sheet_name=None,
-               dt2str=True):
+def read_excel(file_name=None, file_contents=None, offset=1,
+               header_index=0, sheet_index=0, sheet_name=None,
+               dt2str=True, lower_header=True):
     """
     读取 Excel
     :param sheet_name:
@@ -21,6 +22,7 @@ def read_excel(file_name=None, file_contents=None, offset=1, header_index=0, she
     :param sheet_index:
     :param file_name:
     :param offset: 偏移，一般第一行是表头，不需要读取数据
+    :param lower_header: 标题转成小写
     :return:
     """
     try:
@@ -47,7 +49,9 @@ def read_excel(file_name=None, file_contents=None, offset=1, header_index=0, she
     row = sh.row_values(header_index)
     header = []
     for t in row:
-        t = text_type(t).strip().lower()
+        t = text_type(t).strip()
+        if lower_header:
+            t = t.lower()
         header.append(t)
 
     # n_cols = sh.ncols
