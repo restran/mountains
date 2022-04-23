@@ -18,6 +18,7 @@ kwargs = {
 
 install_requires = [
     'requests',
+    'simplejson'
 ]
 
 if sys.version_info < (3, 0):
@@ -42,6 +43,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],  # Get strings from http://pypi.python.org/pypi?:action=list_classifiers
