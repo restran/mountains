@@ -70,7 +70,7 @@ def read_excel(file_name=None, file_contents=None, offset=1,
                     # 转成datetime对象
                     cell = datetime(*xldate_as_tuple(cell, 0))
                     if dt2str:
-                        cell = cell.strftime('%Y-%d-%m %H:%M:%S')
+                        cell = cell.strftime('%Y-%m-%d %H:%M:%S')
                 elif ctype == 4:
                     cell = True if cell == 1 else False
 
