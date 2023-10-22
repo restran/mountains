@@ -118,15 +118,17 @@ class ColorStreamHandler(BaseHandler):
 
 
 class FileHandler(BaseHandler):
-    def __init__(self, filename='log.txt', level=DEBUG, format=None, datefmt=None):
+    def __init__(self, filename='log.txt', level=DEBUG, format=None, datefmt=None, encoding='utf8'):
         super(FileHandler, self).__init__(level, format, datefmt)
         self.filename = filename
         self.handler_class = 'logging.FileHandler'
+        self.encoding = encoding
 
     def get_handler(self):
         handler = super(FileHandler, self).get_handler()
         new_params = {
-            'filename': self.filename
+            'filename': self.filename,
+            'encoding': self.encoding
         }
 
         handler[self.get_formatter_name()].update(new_params)
@@ -136,13 +138,14 @@ class FileHandler(BaseHandler):
 class RotatingFileHandler(BaseHandler):
     def __init__(self, filename='log.txt', max_bytes=1024 * 1024 * 10,
                  backup_count=10, delay=True, level=DEBUG,
-                 format=None, datefmt=None):
+                 format=None, datefmt=None, encoding='utf8'):
         super(RotatingFileHandler, self).__init__(level, format, datefmt)
         self.filename = filename
         self.handler_class = 'logging.handlers.RotatingFileHandler'
         self.max_bytes = max_bytes
         self.backup_count = backup_count
         self.delay = delay
+        self.encoding = encoding
 
     def get_handler(self):
         handler = super(RotatingFileHandler, self).get_handler()
@@ -150,7 +153,8 @@ class RotatingFileHandler(BaseHandler):
             'filename': self.filename,
             'delay': self.delay,
             'maxBytes': self.max_bytes,
-            'backupCount': self.backup_count
+            'backupCount': self.backup_count,
+            'encoding': self.encoding
         }
 
         handler[self.get_formatter_name()].update(new_params)
@@ -160,7 +164,7 @@ class RotatingFileHandler(BaseHandler):
 class TimedRotatingFileHandler(BaseHandler):
     def __init__(self, filename='log.txt', when='D', interval=1,
                  backup_count=10, delay=True, level=DEBUG,
-                 format=None, datefmt=None):
+                 format=None, datefmt=None, encoding='utf8'):
         """
         when 可以使用这些参数
         'S' Seconds
@@ -177,6 +181,7 @@ class TimedRotatingFileHandler(BaseHandler):
         :param level:
         :param format:
         :param datefmt:
+        :param encoding:
         """
         super(TimedRotatingFileHandler, self).__init__(level, format, datefmt)
         self.filename = filename
@@ -185,6 +190,7 @@ class TimedRotatingFileHandler(BaseHandler):
         self.interval = interval
         self.delay = delay
         self.backup_count = backup_count
+        self.encoding = encoding
 
     def get_handler(self):
         handler = super(TimedRotatingFileHandler, self).get_handler()
@@ -193,7 +199,8 @@ class TimedRotatingFileHandler(BaseHandler):
             'delay': self.delay,
             'when': self.when,
             'interval': self.interval,
-            'backupCount': self.backup_count
+            'backupCount': self.backup_count,
+            'encoding': self.encoding
         }
 
         handler[self.get_formatter_name()].update(new_params)

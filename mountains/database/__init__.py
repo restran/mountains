@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 import math
 
 try:
-    import records
+    from . import records
 except Exception as e:
     raise Exception('records is not installed')
 

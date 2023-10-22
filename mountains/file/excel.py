@@ -7,7 +7,7 @@ from datetime import datetime
 from ..base import BytesIO, text_type, iteritems
 from ..file import write_bytes_file
 
-__all__ = ['read_excel', 'write_excel', 'edit_excel']
+__all__ = ['read_excel', 'write_excel', 'edit_excel', 'to_excel_column_no']
 
 
 def read_excel(file_name=None, file_contents=None, offset=1,
